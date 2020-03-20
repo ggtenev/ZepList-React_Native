@@ -6,10 +6,12 @@ export const setLists = () => {
   return async dispatch => {
     const response = await fetch('https://finalprojectedx-72902.firebaseio.com/lists.json')
     const resData = await response.json()
-    console.log(resData)
     resLists = []
     for(let key in resData){
-      resLists.push(resData[key])
+      resLists.push({
+        id:key,
+        list:resData[key]
+      })
     }
     dispatch({ type: SET_LISTS, lists:resLists })
   }
@@ -29,13 +31,16 @@ export const addList = (list) => {
       })
     })
     const resData = await response.json()
-    console.log(resData)
     dispatch({ type: ADD_LIST, list, id: resData.name })
   }
 
 }
 export const deleteList = (id) => {
-  return dispatch => {
+  return async dispatch => {
+    await fetch(`https://finalprojectedx-72902.firebaseio.com/lists/${id}.json`,
+   {
+    method:'DELETE'
+  })
     dispatch({ type: DELETE_LIST, id })
   }
 }

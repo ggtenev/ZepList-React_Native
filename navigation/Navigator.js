@@ -36,11 +36,11 @@ const ListNav = createStackNavigator({
   defaultNavigationOptions: defaultOptions
 })
 const TabNavigator = createBottomTabNavigator({
-  Home: {
+  Lists: {
     screen: AppNavigator,
     navigationOptions: {
       tabBarIcon: (tabInfo) => {
-        return <Ionicons name="md-home" size={32} color={tabInfo.tintColor} />
+        return <Ionicons name="md-list" size={30} color={tabInfo.tintColor} />
       }
     }
   },

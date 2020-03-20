@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, KeyboardAvoidingView, ImageBackground, TextInput, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableWithoutFeedback,Alert, KeyboardAvoidingView, Keyboard, ImageBackground, TextInput, ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux'
 import * as actions from '../store/actions'
 
@@ -16,55 +16,61 @@ export default function NewList({ navigation }) {
   const dispatch = useDispatch()
 
   return (
-    <ImageBackground resizeMode='cover' source={require('../assets/photo.jpg')} style={{ width: '100%', height: '100%' }}>
- 
-        <View style={styles.container}>
-          <Text style={styles.header}> New List</Text>
-          <View style={styles.form}>
-            <View style={styles.title}>
-              <TextInput placeholder='Title' value={title} onChangeText={t => setTitle(t)} />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <ImageBackground resizeMode='cover' source={require('../assets/photo.jpg')} style={{ width: '100%', height: '100%' }}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+          <View style={styles.container}>
+            <Text style={styles.header}> New List</Text>
+            <View style={styles.form}>
+              <View style={styles.title}>
+                <TextInput placeholder='Title' value={title} onChangeText={t => setTitle(t)} />
+              </View>
+              <View style={styles.title}>
+                <TextInput placeholder='Shop' value={shop} onChangeText={t => setShop(t)} />
+              </View>
+              <View style={styles.item}>
+                <TextInput placeholder='Item' value={item1} onChangeText={t => setItem1(t)} />
+              </View>
+              <View style={styles.item}>
+                <TextInput placeholder='Item' value={item2} onChangeText={t => setItem2(t)} />
+              </View>
+              <View style={styles.item}>
+                <TextInput placeholder='Item' value={item3} onChangeText={t => setItem3(t)} />
+              </View>
+              <View style={styles.item}>
+                <TextInput placeholder='Item' value={item4} onChangeText={t => setItem4(t)} />
+              </View>
+              <View style={styles.item}>
+                <TextInput placeholder='Item' value={item5} onChangeText={t => setItem5(t)} />
+              </View>
+              <View style={styles.item}>
+                <TextInput placeholder='Item' value={item6} onChangeText={t => setItem6(t)} />
+              </View>
             </View>
-            <View style={styles.title}>
-              <TextInput placeholder='Shop' value={shop} onChangeText={t => setShop(t)} />
-            </View>
-            <View style={styles.item}>
-              <TextInput placeholder='Item' value={item1} onChangeText={t => setItem1(t)} />
-            </View>
-            <View style={styles.item}>
-              <TextInput placeholder='Item' value={item2} onChangeText={t => setItem2(t)} />
-            </View>
-            <View style={styles.item}>
-              <TextInput placeholder='Item' value={item3} onChangeText={t => setItem3(t)} />
-            </View>
-            <View style={styles.item}>
-              <TextInput placeholder='Item' value={item4} onChangeText={t => setItem4(t)} />
-            </View>
-            <View style={styles.item}>
-              <TextInput placeholder='Item' value={item5} onChangeText={t => setItem5(t)} />
-            </View>
-            <View style={styles.item}>
-              <TextInput placeholder='Item' value={item6} onChangeText={t => setItem6(t)} />
+            <View style={{ width: '100%' }}>
+              <Button title='ADD' color='#2cbf13'
+                onPress={() => {
+                  if(title.length < 1 || shop.length < 1){
+                    Alert.alert('Invalid Input','You must add a title and shop',['OK'])
+                    return
+                  }
+                  dispatch(actions.addList({ title, shop, products: [item1, item2, item3, item4, item5, item6] }))
+                  setTitle('')
+                  setShop('')
+                  setItem1('')
+                  setItem2('')
+                  setItem3('')
+                  setItem4('')
+                  setItem5('')
+                  setItem6('')
+                  navigation.navigate('Home')
+                }
+                } />
             </View>
           </View>
-          <View style={{ width: '100%' }}>
-            <Button title='ADD' color='#2cbf13'
-              onPress={() => {
-                dispatch(actions.addList({ title, shop, products:[item1, item2, item3, item4, item5, item6]  }))
-                setTitle('')
-                setShop('')
-                setItem1('')
-                setItem2('')
-                setItem3('')
-                setItem4('')
-                setItem5('')
-                setItem6('')
-                navigation.navigate('Home')
-              }
-              } />
-          </View>
-        </View>
-
-    </ImageBackground>
+          </TouchableWithoutFeedback>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -74,13 +80,14 @@ NewList.navigationOptions = ({ navigation }) => {
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
-    margin: 40,
+
+    marginTop: 40,
+    marginHorizontal: 15,
     backgroundColor: 'white',
     opacity: 0.88,
-    height: '80%',
+    // height: '90%',
     alignItems: 'center',
   },
   header: {
@@ -95,12 +102,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 5,
     marginHorizontal: 30,
-    marginVertical: 10
+    marginVertical: 10,
+    // borderBottomColor: 'grey',
+    // borderBottomWidth: 0.7,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 2,
+    shadowRadius: 5,
   },
   item: {
     backgroundColor: 'white',
     padding: 5,
     marginHorizontal: 10,
-    marginVertical: 3
+    marginVertical: 3,
+    // borderBottomColor: 'grey',
+    // borderBottomWidth: 0.6,
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 1 },
+    elevation: 2,
+    shadowRadius: 5,
   }
 })

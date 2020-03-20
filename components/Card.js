@@ -5,6 +5,7 @@ import * as actions from '../store/actions'
 
 export default function Card({ title, place, navigation, id }) {
   const dispatch = useDispatch()
+  console.log(id)
   return (
     <View style={styles.card}>
       <View style={styles.info}>

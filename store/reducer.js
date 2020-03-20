@@ -1,4 +1,4 @@
-import { ADD_LIST, DELETE_LIST } from "./actions";
+import { ADD_LIST, DELETE_LIST, SET_LISTS } from "./actions";
 
 const initState =
 {
@@ -8,6 +8,20 @@ const initState =
 
  const reducer = (state=initState, action) =>{
    switch (action.type) {
+     case SET_LISTS:
+       let newLists = []
+       for(let i of action.lists){
+         newLists.push({
+           title:i.list.title,
+           place:i.list.shop,
+           products:i.list.products,
+           id:i.id
+         })
+       }
+       return {
+         ...state,
+         lists:newLists
+       }
      case ADD_LIST:
        const newList = {
          title:action.list.title,
